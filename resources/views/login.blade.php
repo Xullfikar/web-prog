@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Login Page</title>
-    {{ 
-        app('Illuminate\Foundation\Vite') 
-        ([
-            'resources/css/app.scss',
-            'resources/js/app.js'
-        ])
-    }}
-</head>
-<body>
-    @include('layouts.navbar')
+@extends('layouts.master')
+
+@section('title', 'Login')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-6 bg-secondary vh-100"></div>
@@ -27,12 +17,11 @@
                             <label for="">Password</label>
                             <input type="password" name="" id="" class="form-control">
                         </div>
-                        <a href="{{ route('register.view') }}" class="mt-2 btn btn-primary w-100">Login</a>
+                        <a href="{{ route('home') }}" class="mt-2 btn btn-primary w-100">Login</a>
                     </form>
                     <a href="{{ route('register.view') }}" class="mt-2 btn btn-link">Don't have an account? Register here</a>
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html> 
+@endsection
