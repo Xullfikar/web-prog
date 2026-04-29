@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Login Page</title>
-    {{ 
-        app('Illuminate\Foundation\Vite') 
-        ([
-            'resources/css/app.scss',
-            'resources/js/app.js'
-        ])
-    }}
-</head>
-<body>
-    @include('layouts.navbar')
+@extends('layouts.master')
+
+@section('title', 'Register')
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-6 bg-secondary vh-100"></div>
@@ -38,5 +28,4 @@
             </div>
         </div>
     </div>
-</body>
-</html> 
+@endsection

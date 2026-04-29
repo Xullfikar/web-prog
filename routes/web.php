@@ -31,3 +31,47 @@ Route::prefix('product')->name('product.')->group(function (){
 Route::get('about', [AboutController::class, 'index']);
 
 Route::redirect('kontak-kami', 'about');
+
+Route::get('/home', function (){
+    $students = [
+        [
+            'id' => 1,
+            'name' => "ucup",
+            'score' => [97,95,90]
+        ],
+        [
+            'id' => 2,
+            'name' => "endy",
+            'score' => [100,100,100]
+        ],
+        [
+            'id' => 3,
+            'name' => "cok",
+            'score' => [70,70,80]
+        ],
+    ];
+    return view('home', compact('students'));
+})->name('home');
+
+Route::get('/students/{id}', function ($id){
+    $students = [
+        [
+            'id' => 1,
+            'name' => "ucup",
+            'score' => [97,95,90]
+        ],
+        [
+            'id' => 2,
+            'name' => "endy",
+            'score' => [100,100,100]
+        ],
+        [
+            'id' => 3,
+            'name' => "cok",
+            'score' => [70,70,80]
+        ],
+    ];
+
+    $student = collect($students)->firstWhere('id', $id);
+    return view('students.detail', compact('student'));
+})->name('students.detail');
