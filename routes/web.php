@@ -1,18 +1,19 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Student\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login.view');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login.view');
 
-Route::post('/login', function () {})->name('login.do');
+Route::post('/login', [AuthController::class, 'login'])->name('login.do');
 
 Route::get('/register', function () {
     return view('register');
@@ -32,46 +33,6 @@ Route::get('about', [AboutController::class, 'index']);
 
 Route::redirect('kontak-kami', 'about');
 
-Route::get('/home', function (){
-    $students = [
-        [
-            'id' => 1,
-            'name' => "ucup",
-            'score' => [97,95,90]
-        ],
-        [
-            'id' => 2,
-            'name' => "endy",
-            'score' => [100,100,100]
-        ],
-        [
-            'id' => 3,
-            'name' => "cok",
-            'score' => [70,70,80]
-        ],
-    ];
-    return view('home', compact('students'));
-})->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/students/{id}', function ($id){
-    $students = [
-        [
-            'id' => 1,
-            'name' => "ucup",
-            'score' => [97,95,90]
-        ],
-        [
-            'id' => 2,
-            'name' => "endy",
-            'score' => [100,100,100]
-        ],
-        [
-            'id' => 3,
-            'name' => "cok",
-            'score' => [70,70,80]
-        ],
-    ];
-
-    $student = collect($students)->firstWhere('id', $id);
-    return view('students.detail', compact('student'));
-})->name('students.detail');
+Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.detail');
