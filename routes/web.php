@@ -35,4 +35,4 @@ Route::redirect('kontak-kami', 'about');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.detail');
+Route::get('/students/{id}', [StudentController::class, 'index'])->name('students.detail');
