@@ -35,4 +35,9 @@ Route::redirect('kontak-kami', 'about');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/students/{id}', [StudentController::class, 'index'])->name('students.detail');
+
+Route::prefix('students')->name('students.')->group(function(){
+    Route::get('/create', [StudentController::class, 'showCreate'])->name('create');
+    Route::post('/create', [StudentController::class, 'insertStudent'])->name('insert');
+    Route::get('/{id}', [StudentController::class, 'detail'])->name('detail');
+});

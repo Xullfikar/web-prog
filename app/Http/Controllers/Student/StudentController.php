@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Students;
+use Illuminate\Http\Request; 
 
 class StudentController extends Controller
 {
-    public function index(string $id)
+    public function detail(string $id)
     {
         $students = [
             [
@@ -28,5 +30,25 @@ class StudentController extends Controller
 
         $student = collect($students)->firstWhere('id', $id);
         return view('students.detail', compact('student'));
+    }
+
+    public function showCreate(){
+        return view('students.create');
+    }
+
+    public function insertStudent(Request $request){
+        $name = $request->input('student_name');
+        $nim = $request->input('student_nim');
+
+        $process = Students::create([
+            'name' => $name,
+            'nim' => $nim,
+        ]);
+
+        if($process){
+            return redirect()->route('home');
+        } else {
+            return back()->withInput();
+        }
     }
 }
