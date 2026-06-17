@@ -12,12 +12,13 @@ Route::get('/', function () {
 
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login.view');
-
 Route::post('/login', [AuthController::class, 'login'])->name('login.do');
 
 Route::get('/register', function () {
     return view('register');
 })->name('register.view');
+
+Route::post('/register', [AuthController::class, 'register'])->name('register.do');
 
 Route::prefix('product')->name('product.')->group(function (){
     Route::get('/list', function(){

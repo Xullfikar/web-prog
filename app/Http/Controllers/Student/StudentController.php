@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Courses;
 use App\Models\Scores;
 use App\Models\Students;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -23,8 +23,13 @@ class StudentController extends Controller
     }
 
     public function insertStudent(Request $request){
-        $name = $request->input('student_name');
-        $nim = $request->input('student_nim');
+        $validated = $request->validate([
+            'student_name' => ['required'],
+            'student_nim' => ['required', 'numeric', 'unique:students,nim']
+        ]);
+
+        $name = $validated['student_name'];
+        $nim = $validated['student_nim'];
 
         $process = Students::create([
             'name' => $name,
@@ -34,7 +39,10 @@ class StudentController extends Controller
         if($process){
             return redirect()->route('home');
         } else {
-            return back()->withInput();
+            // return back()->withInput()->with('error_messages', 'terjadi kesalahan saat insert!');
+            return back()->withInput()->withErrors([
+                'insert_student' => 'Terjadi kesalahan saat insert!'
+            ]);
         }
     }
 
@@ -51,8 +59,13 @@ class StudentController extends Controller
 
     public function studentUpdate(string $id, Request $request)
     {
-        $new_name = $request->input('student_name');
-        $new_nim = $request->input('student_nim');
+        $validated = $request->validate([
+            'student_name' => ['required'],
+            'student_nim' => ['required', 'numeric', 'unique:students,nim']
+        ]);
+
+        $new_name = $validated['student_name'];
+        $new_nim = $validated['student_nim'];
 
         $student = Students::firstWhere('id', $id);
 
@@ -87,8 +100,8 @@ class StudentController extends Controller
             $student->delete();
 
             return redirect()->route('home');
-        }    
-            
+        }
+
         return back();
     }
 
