@@ -9,15 +9,16 @@
                 @csrf
                 <div class="">
                     <label class="form-label">Student Name:</label>
-                    <input type="text" class="form-control", name="student_name", required>
+                    <input type="text" class="form-control", name="student_name" value="{{ old('student_name') }}">
                 </div>
                 <div class="">
                     <label class="form-label">Student Number:</label>
-                    <input type="text" class="form-control", name="student_nim", required>
+                    <input type="text" class="form-control", name="student_nim" value="{{ old('student_nim') }}">
                 </div>
+                @include('components.error_messages')
                 <button type="submit" class="btn btn-primary mt-4">Add Student</button>
             </form>
         </div>
     </div>
-    
+
 @endsection

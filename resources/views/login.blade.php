@@ -14,7 +14,7 @@
                             <label for="username">Username</label>
                             <input type="text" name="username" id="" class="form-control" value="{{ old('username') }}">
                         </div>
-                            
+
                         <div class="my-2">
                             <label for="password">Password</label>
                             <input type="password" name="password" id="" class="form-control">
@@ -22,6 +22,10 @@
                         @if (session('error_messages'))
                             <div class="alert alert-danger mt-3">{{session('error_messages')}}</div>
                         @endif
+                        @include('components.error_messages')
+                        {{-- @error('username')
+                            <div class="alert alert-danger mt-3">{{ $messages }}</div>
+                        @enderror --}}
                         <button class="mt-2 btn btn-primary w-100" type="submit">Login</button>
                     </form>
                     <a href="{{ route('register.view') }}" class="mt-2 btn btn-link">Don't have an account? Register here</a>

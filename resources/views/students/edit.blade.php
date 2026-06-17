@@ -16,9 +16,10 @@
                     <label class="form-label">Student Number:</label>
                     <input value="{{ old('student_nim', $student->nim) }}" type="text" class="form-control", name="student_nim", required>
                 </div>
+                @include('components.error_messages')
                 <button type="submit" class="btn btn-primary mt-4">Update Student</button>
             </form>
         </div>
     </div>
-    
+
 @endsection

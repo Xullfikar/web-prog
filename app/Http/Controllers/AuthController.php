@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -10,7 +11,7 @@ class AuthController extends Controller
     {
         return view('login');
     }
-        
+
     public function showRegister()
     {
         return view('register');
@@ -18,13 +19,45 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
-        
-        if ($username != '' && $password != ''){
-            return redirect()->route('home');
-        } else {
-            return back()->withInput()->with('error_messages', 'username, password must be field');
-        }
+        $validated = $request->validate(
+        [
+            'username' => 'required|email',
+            'password' => ['required', 'min:3', 'max:20',
+                            Password::min(3)
+                                ->max(20)
+                                ->mixedCase()
+                                ->symbols()
+                            ],
+        ],
+        [
+            'username.required' => 'Email gak boleh kosong!!',
+            'username.email' => 'Format text email harus benar!'
+        ]
+        );
+
+        return redirect()->route('home');
     }
+
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => ['required', 'email'],
+            'password' => ['required', 'confirmed',
+                            Password::min(3)
+                            ->max(20)
+                            ->mixedCase()
+                            ->symbols()
+            ]
+        ]);
+
+        return redirect()->route('home');
+    }
+
+    // public function val(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'total_students' => ['different:class'],
+    //         'class_date' => ['after:today']
+    //     ]);
+    // }
 }
