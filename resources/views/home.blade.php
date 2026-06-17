@@ -12,6 +12,7 @@
                     <th>Name</th>
                     <th>Average Score</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,14 @@
                         @else
                             <span class="badge text-bg-danger">Gak Lulus</span>
                         @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('students.edit', $st->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('students.delete', $st->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete student data?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
