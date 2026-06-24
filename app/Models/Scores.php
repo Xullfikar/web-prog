@@ -13,7 +13,11 @@ class Scores extends Model
     protected $fillable = [
         'student_id',
         'course_id',
-        'score'
+        'score',
+        'attendence',
+        'assigment',
+        'mid_exam',
+        'final_exam',
     ];
 
     public function student()
