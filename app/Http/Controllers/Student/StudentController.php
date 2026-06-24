@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Courses;
 use App\Models\Scores;
 use App\Models\Students;
+use App\Services\ScorePredictionService;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -110,11 +111,19 @@ class StudentController extends Controller
         $student_id = $request->input('student_id');
         $course_id = $request->input('course_id');
         $score = $request->input('score');
+        $attendence = $request->input('attendence');
+        $assigment = $request->input('assigment');
+        $mid = $request->input('mid');
+        $final = $request->input('final');
 
         $insertData = Scores::create([
             'student_id' => $student_id,
             'course_id' => $course_id,
-            'score' => $score
+            'score' => $score,
+            'attendence' => $attendence,
+            'assigment' => $assigment,
+            'mid_exam' => $mid,
+            'final_exam' => $final,
         ]);
 
         if($insertData){
@@ -122,5 +131,21 @@ class StudentController extends Controller
         }
 
         return back()->withInput();
+    }
+
+    public function predictScore($id, ScorePredictionService $classifier)
+    {
+        $scores = Scores::where('student_id', $id)->get();
+        $attendence = $scores->avg('attendence');
+        $assigment = $scores->avg('assigment');
+        $mid_exam = $scores->avg('mid_exam');
+        $final_exam = $scores->avg('final_exam');
+        $result = $classifier->predict($attendence, $assigment, $mid_exam, $final_exam);
+
+        $student = Students::where('id', $id)->first();
+        $update['prediction'] = $result;
+        $student->update($update);
+
+        return redirect()->route('students.detail', $id);
     }
 }

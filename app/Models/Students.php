@@ -10,10 +10,14 @@ class Students extends Model
     protected $table = 'students';
 
     // 2. field apa saja yang bisa diisi
-    protected $fillable = ['name', 'nim'];
+    protected $fillable = [
+        'name',
+        'nim',
+        'prediction'
+    ];
 
     // 3. relasi
-    public function student_scores() 
+    public function student_scores()
     {
         return $this->hasMany(Scores::class, 'student_id');
     }

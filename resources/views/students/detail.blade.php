@@ -9,27 +9,50 @@
             <div class="card-body">
                 <h3>Name: {{$data->name}}</h3>
                 <h3>Nim: {{$data->nim}}</h3>
+                <h2 class="h-5">Status: {{blank($data->prediction) ? '-' : ($data->prediction ? 'Telat' : 'Tepat Waktu')}}</h2>
+                <form action="{{ route('students.predict', $data->id) }}" method="POST">
+                    @csrf
+                    <button class="btn bt-sm btn-info" type="submit">Predict Status</button>
+                </form>
             </div>
         </div>
-        
+
         <div class="card mt-4">
             <div class="card-body">
                 <h2 class="h5">Add Score</h2>
                 <form action="{{ route('students.scores.insert') }}" method="POST">
                     @csrf
                     <input type="hidden" name="student_id" value="{{ $data->id }}">
-                    <div class="col-md-4">
-                        <label for="" class="form-label">Course</label>
-                        <select name="course_id" class="form-control" required>
-                            <option value="" disabled selected>-- Select Course --</option>
-                            @foreach ($courses as $course)
-                                <option value="{{ $course->id }}">{{ $course->name }}</option>                               
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="" class="form-label">Score (0 - 100)</label>
-                        <input type="number" name="score" class="form-control" required min=0, max=100>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-label">Course</label>
+                            <select name="course_id" class="form-control" required>
+                                <option value="" disabled selected>-- Select Course --</option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">Attendance Percentage (0 - 100)</label>
+                            <input type="number" name="attendence" class="form-control" required min=0, max=100>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">Assigment (0 - 100)</label>
+                            <input type="number" name="assigment" class="form-control" required min=0, max=100>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">Mid Exam (0 - 100)</label>
+                            <input type="number" name="mid" class="form-control" required min=0, max=100>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">Final Exam (0 - 100)</label>
+                            <input type="number" name="final" class="form-control" required min=0, max=100>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">Score (0 - 100)</label>
+                            <input type="number" name="score" class="form-control" required min=0, max=100>
+                        </div>
                     </div>
                     <div class="col-12 mt-3">
                         <button type="submit" class="btn btn-success">Save Score</button>
@@ -45,6 +68,10 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Course</th>
+                            <th>Attendece</th>
+                            <th>Assigment</th>
+                            <th>Final</th>
+                            <th>Mid</th>
                             <th>Score</th>
                             <th>Grade</th>
                             <th>Action</th>
@@ -62,11 +89,15 @@
                                 } else if ($score->score >= 75 && $score->score <= 79) {
                                     $grade = 'B';
                                 } else {
-                                    $grade = 'Goblok Lu';
+                                    $grade = 'Bercanda';
                                 }
                             @endphp
                         <tr>
                             <td>{{ $score->courses->code }} - {{$score->courses->name}}</td>
+                            <td>{{$score->attendence}}%</td>
+                            <td>{{$score->assigment}}</td>
+                            <td>{{$score->mid_exam}}</td>
+                            <td>{{$score->final_exam}}</td>
                             <td>{{$score->score}}</td>
                             <td>{{$grade}}</td>
                             <td></td>
@@ -77,24 +108,5 @@
                 </table>
             </div>
         </div>
-        {{-- <h4>Score list: </h4> --}}
-        <ul class="list-group">
-            {{-- @foreach ($student['score'] as $score)
-                @php
-                    if ($score >= 90 && $score <= 100) {
-                        $grade = 'A';
-                    } else if ($score >= 85 && $score <= 89) {
-                        $grade = 'A-';
-                    } else if ($score >= 80 && $score <= 84) {
-                        $grade = 'B+';
-                    } else if ($score >= 75 && $score <= 79) {
-                        $grade = 'B';
-                    } else {
-                        $grade = 'Goblok Lu';
-                    }
-                @endphp
-                <li class="list-group-item">Score: {{ $score }} - Grade: {{ $grade }}</li>
-            @endforeach --}}
-        </ul>
     </div>
 @endsection

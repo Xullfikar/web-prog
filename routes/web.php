@@ -41,6 +41,7 @@ Route::prefix('students')->name('students.')->group(function(){
     Route::get('/create', [StudentController::class, 'showCreate'])->name('create');
     Route::post('/create', [StudentController::class, 'insertStudent'])->name('insert');
     Route::post('/score/insert', [StudentController::class, 'insertScore'])->name('scores.insert');
+    Route::post('/predict/{id}', [StudentController::class, 'predictScore'])->name('predict');
     Route::get('/update/{id}', [StudentController::class, 'showEdit'])->name('edit');
     Route::patch('/update/{id}', [StudentController::class, 'studentUpdate'])->name('update');
     Route::delete('/delete/{id}', [StudentController::class, 'studentDelete'])->name('delete');
