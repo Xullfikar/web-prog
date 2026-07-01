@@ -27,9 +27,9 @@
                     <td>{{ round($average, 2) }}</td>
                     <td>
                         @if ($average > 85)
-                            <span class="badge text-bg-success">Lulus</span>
+                            <span class="badge text-bg-success">{{ __("main.student.status_ok") }}</span>
                         @else
-                            <span class="badge text-bg-danger">Gak Lulus</span>
+                            <span class="badge text-bg-danger">{{ __("main.student.status_fail") }}</span>
                         @endif
                     </td>
                     <td>

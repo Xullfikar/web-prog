@@ -7,7 +7,7 @@
             <div class="col-6 bg-secondary vh-100"></div>
             <div class="col-6 d-flex justify-content-center align-items-center">
                 <div class="card p-4" style="width: 400px">
-                    <h2>Login</h2>
+                    <h2>{{ __('main.login') }}</h2>
                     <form action="{{ route('login.do') }}" method="POST">
                         @csrf
                         <div class="my-2">
@@ -26,9 +26,9 @@
                         {{-- @error('username')
                             <div class="alert alert-danger mt-3">{{ $messages }}</div>
                         @enderror --}}
-                        <button class="mt-2 btn btn-primary w-100" type="submit">Login</button>
+                        <button class="mt-2 btn btn-primary w-100" type="submit">{{ __('main.login') }}</button>
                     </form>
-                    <a href="{{ route('register.view') }}" class="mt-2 btn btn-link">Don't have an account? Register here</a>
+                    <a href="{{ route('register.view') }}" class="mt-2 btn btn-link">Don't have an account? {{ __('main.register') }} here</a>
                 </div>
             </div>
         </div>
